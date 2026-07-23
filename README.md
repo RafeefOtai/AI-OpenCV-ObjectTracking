@@ -1,69 +1,41 @@
 # AI Task 2 - Object Tracking (OpenCV)
 
-## What Object Tracking means
+## ▶️ [Watch the Tracking Video](https://drive.google.com/file/d/1jgoyIhErwdcBpYtw5Vjv-ijOAY1X1PST/view?usp=drivesdk)
+> Notes : Tracking works best while the object stays visible in frame. If it's lost, it needs to be re-selected to continue.
 
-Object detection finds an object in a single frame. Tracking is different:
-the object is selected once, and the algorithm follows that same object
-frame after frame, without re-detecting it every time. This makes tracking
-more efficient than running object detection on every frame.
+---
+
+## What Object Tracking means 
+
+Object detection finds an object in a single frame. Tracking is different: the object is selected once, and the algorithm follows that same object frame after frame without re-detecting it every time. This makes tracking more efficient than running object detection on every frame.
+
+---
 
 ## Requirements
-
-This project was developed using:
-
-- Python 3.13.9
-- OpenCV
-- Webcam 
-
-The required library can be installed using:
-
 ```bash
 pip install opencv-contrib-python
 ```
+The contrib build is needed because the tracker classes (CSRT, KCF, MIL)
+aren't guaranteed to be in the base `opencv-python` package on newer
+OpenCV versions.
 
-## Project Execution
+---
 
-The project supports the following execution modes.
-
-Using the default webcam:
-
+## Running it
 ```bash
 python object_tracker.py
 ```
+`--source` swaps in a video file instead of the webcam, `--save` writes
+the result to a file, `--tracker` switches the algorithm (CSRT is
+default). The first frame opens a window to draw a box around the object;
+tracking starts once it's confirmed.
 
-Using a video file as the input source:
-
-```bash
-python object_tracker.py --source my_video.mp4
-```
-
-Saving the tracking result to a new video file:
-
-```bash
-python object_tracker.py --source my_video.mp4 --save output.mp4
-```
-
-Using a different tracking algorithm:
-
-```bash
-python object_tracker.py --tracker KCF
-```
-
-When the first frame is displayed, the target object is selected by drawing
-a bounding box around it. Tracking begins immediately after the selection
-is confirmed.
+---
 
 ## Supported Trackers
 
 | Tracker | Speed | Accuracy | Best for |
 |----------|------:|---------:|----------|
-| CSRT | Slower | Highest | Default choice, good general accuracy |
-| KCF | Faster | Medium | Real-time on weaker hardware |
-| MIL | Medium | Lower | Simple test cases |
-
-## Notes
-
-- Tracking works best when the selected object remains visible and stays
-  within the camera frame.
-- If tracking is lost, the object must be selected again before tracking
-  can continue.
+| CSRT | Slower | Highest | General object tracking |
+| KCF | Faster | Medium | Real-time performance |
+| MIL | Medium | Lower | Simple tracking tasks |
